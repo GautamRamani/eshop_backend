@@ -1,0 +1,19 @@
+{
+    "orderItems" : [
+        {
+            "quantity": 3,
+            "product" : "63259fcd019478ced612b091"
+        },
+        {
+            "quantity": 2,
+            "product" : "6325a0f1019478ced612b097"
+        }
+    ],
+    "shippingAddress1" : "surat nanpura",
+    "shippingAddress2" : "1-B",
+    "city": "surat",
+    "zip": "395001",
+    "country": "india",
+    "phone": "9598989598",
+    "user": "63284a0102907d0b1ea1aae8"
+}

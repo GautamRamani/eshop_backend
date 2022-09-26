@@ -1,0 +1,22 @@
+steps:-
+
+1)npm init -y
+ -install dependencies
+ -npm i express mongoose cors dotenv morgan
+ -npm i bcryptjs express-jwt jsonwebtoken nodmon
+
+
+
+
+theory:-
+.env:-
+        Its environment variables file. In simple term, it is a variable text file. In this file we set a variable with value and that you wouldn’t want to share with anyone, purpose of file is keep as secret and secure because in .env file we store our database password, username, API key etc…
+
+morgan:-
+        Morgan is a logging package for node.js. It can generate log files for all the traffic that comes to your server. It has some cool tricks to help us in both development and production. So let's get started.
+
+cors:-
+         Implementing CORS in Node.js helps you access numerous functionalities on the browser. Express allows you to configure and manage an HTTP server to access resources from the same domain.
+
+bodyparser:-
+        Body Parser is a middleware of Node JS used to handle HTTP POST request. Body Parser can parse string based client request body into JavaScript Object which we can use in our application.06-Sept-2021

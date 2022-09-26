@@ -1,0 +1,12 @@
+{
+    "name":"gautam",
+    "email":"gautam@gmail.com",
+    "passwordHash":"123456",
+    "phone":"9876523104",
+    "isAdmin":"true",
+    "street":"surat",
+    "apartment":"edfrfr",
+    "zip":"xyz",
+    "city":"surat",
+    "country":"india"
+}

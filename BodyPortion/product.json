@@ -1,0 +1,14 @@
+{
+    "name":"Jeans",
+    "description":"xyz",
+    "richDescription":"vwxyz",
+    "image":"abc",
+    "images":["abc.jpg","xyz.jpg"],
+    "brand":"Denim",
+    "price":700,
+    "countInStock": 125,
+    "rating":4,
+    "numReviews":25,
+    "isFeatured":true,
+    "dateCreated":""
+}
