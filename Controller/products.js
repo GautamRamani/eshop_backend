@@ -90,7 +90,7 @@ router.get("/get/featured/:count",async(req,res)=>{
 
 
 //post
-router.post("/",upload.single("image"),async(req,res)=>{
+router.post("/",upload.array("images",10),async(req,res)=>{
     const category=await Category.findById(req.body.category)
     if(!category) return res.status(400).send("Invalid Category")
 
