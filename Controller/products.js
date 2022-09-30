@@ -3,6 +3,34 @@ const { default: mongoose } = require("mongoose");
 const { Category } = require("../Model/category");
 const {Product}=require("../Model/product")
 const router=express.Router();
+const multer=require("multer")
+const path = require('path');
+let basename = path.basename('./middleware/login.js')
+
+const FILE_TYPE_MAP={
+    "image/png":"png",
+    "image/jpeg":"jpeg",
+    "image/jpg":"jpg"
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const isValid=FILE_TYPE_MAP[file.mimetype];
+        let uploadError=new Error("invalid image upload")
+        if(isValid){
+            uploadError=null;
+        }
+      cb(uploadError, 'public/uploads')
+    },
+    filename: function (req, file, cb) {
+        const filename=file.originalname.split(" ").join("-");
+        const extension=FILE_TYPE_MAP;
+    //   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null,`${filename}-${Date.now()}.${extension}`)
+    }
+  })
+  
+  const upload = multer({ storage: storage })
 
 //get
 // router.get("/",async(req,res)=>{
@@ -64,14 +92,24 @@ router.get("/get/featured/:count",async(req,res)=>{
 
 
 //post
-router.post("/",async(req,res)=>{
-    const category=await Category.findById(req.body.category)
-    if(!category) return res.status(400).send("Invalid Category")
+router.post("/",upload.single("image"),async(req,res)=>{
+    // const category=await Category.findById(req.body.category)
+    // if(!category) return res.status(400).send("Invalid Category")
+
+    const file=req.file;
+    if(!file) return res.status(400).send("no image in the request")
+
+    const fileName=file.filename;
+    const extension=FILE_TYPE_MAP[file.mimetype];
+    const basePath=`${req.protocol}://${req.get("host")}/public/uploads/`;
+    
+    console.log(basePath)
+
     let product=new Product({
         name:req.body.name,
         description:req.body.description,
         richDescription:req.body.richDescription,
-        image:req.body.image,
+        image:`${basePath}${fileName}`,
         images:req.body.images,
         brand:req.body.brand,
         price:req.body.price,
