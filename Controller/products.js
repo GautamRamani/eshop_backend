@@ -90,7 +90,7 @@ router.get("/get/featured/:count",async(req,res)=>{
 
 
 //post
-router.post("/",upload.array("images",10),async(req,res)=>{
+router.post("/",upload.single("image"),async(req,res)=>{
     const category=await Category.findById(req.body.category)
     if(!category) return res.status(400).send("Invalid Category")
 
@@ -105,8 +105,8 @@ router.post("/",upload.array("images",10),async(req,res)=>{
         name:req.body.name,
         description:req.body.description,
         richDescription:req.body.richDescription,
-        // image:`${basePath}${fileName}`,
-        images:`${basePath}${fileName}`,
+        image:`${basePath}${fileName}`,
+        images:req.body.images,
         brand:req.body.brand,
         price:req.body.price,
         category : req.body.category,
