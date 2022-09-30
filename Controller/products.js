@@ -5,7 +5,6 @@ const {Product}=require("../Model/product")
 const router=express.Router();
 const multer=require("multer")
 const path = require('path');
-let basename = path.basename('./middleware/login.js')
 
 const FILE_TYPE_MAP={
     "image/png":"png",
