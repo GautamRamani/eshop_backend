@@ -105,7 +105,7 @@ router.post("/",upload.array("image",10),async(req,res)=>{
         name:req.body.name,
         description:req.body.description,
         richDescription:req.body.richDescription,
-        image:`${basePath}${fileName}`,
+        // image:`${basePath}${fileName}`,
         images:`${basePath}${fileName}`,
         brand:req.body.brand,
         price:req.body.price,
