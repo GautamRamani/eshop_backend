@@ -4,12 +4,11 @@ const { Category } = require("../Model/category");
 const {Product}=require("../Model/product")
 const router=express.Router();
 const multer=require("multer")
-const path = require('path');
 
 const FILE_TYPE_MAP={
     "image/png":"png",
     "image/jpeg":"jpeg",
-    "image/jpg":"jpg"
+    "image/jpg":"jpg",
 }
 
 const storage = multer.diskStorage({
@@ -23,7 +22,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const filename=file.originalname.split(" ").join("-");
-        const extension=FILE_TYPE_MAP;
+        const extension=FILE_TYPE_MAP[file.mimetype];
     //   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       cb(null,`${filename}-${Date.now()}.${extension}`)
     }
@@ -99,9 +98,7 @@ router.post("/",upload.single("image"),async(req,res)=>{
     if(!file) return res.status(400).send("no image in the request")
 
     const fileName=file.filename;
-    const extension=FILE_TYPE_MAP[file.mimetype];
     const basePath=`${req.protocol}://${req.get("host")}/public/uploads/`;
-    
     console.log(basePath)
 
     let product=new Product({
