@@ -129,35 +129,59 @@ router.post("/",upload.single("image"),async(req,res)=>{
 })
 
 //put
-router.put("/:id",async(req,res)=>{
+// router.put("/:id",async(req,res)=>{
+//     if(!mongoose.isValidObjectId(req.params.id)){
+//         return res.status(400).send("Invalid Product Id")
+//     }
+//     let category=await Category.findById(req.body.category)
+//     if(!category) return res.status(400).send("Invalid Category")
+
+//     let product=await Product.findByIdAndUpdate(
+//       req.params.id,
+//       { 
+//         name : req.body.name,
+//         description : req.body.description,
+//         richDescription : req.body.richDescription,
+//         image : req.body.image,
+//         images : req.body.images,
+//         brand : req.body.brand,
+//         price : req.body.price,
+//         category : req.body.category,   
+//         countInStock : req.body.countInStock,
+//         rating : req.body.rating,
+//         numReviews : req.body.numReviews,
+//         isFeatured : req.body.isFeatured,   
+//       },
+//       {new:true}
+//     );
+//     if (!product) return res.status(400).send("the category cannot be created..");
+//     res.send (product);
+//   });
+
+  router.put("/gallery-images/:id",upload.array("images",10),async(req,res)=>{
     if(!mongoose.isValidObjectId(req.params.id)){
-        return res.status(400).send("Invalid Product Id")
+        return res.status(400).send("Invalid product Id")
     }
-    let category=await Category.findById(req.body.category)
-    if(!category) return res.status(400).send("Invalid Category")
-
-    let product=await Product.findByIdAndUpdate(
-      req.params.id,
-      { 
-        name : req.body.name,
-        description : req.body.description,
-        richDescription : req.body.richDescription,
-        image : req.body.image,
-        images : req.body.images,
-        brand : req.body.brand,
-        price : req.body.price,
-        category : req.body.category,   
-        countInStock : req.body.countInStock,
-        rating : req.body.rating,
-        numReviews : req.body.numReviews,
-        isFeatured : req.body.isFeatured,   
-      },
-      {new:true}
+    const files = req.files;
+    let imagesPaths =[];
+    const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`
+    
+    if(files){
+        files.map((file)=>{
+            imagesPaths.push(`${basePath}${file.filename}`)
+        });
+    }
+    console.log(imagesPaths);
+    const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+            images:imagesPaths,
+        },
+        {new:true}
     );
-    if (!product) return res.status(400).send("the category cannot be created..");
-    res.send (product);
-  });
-
+    if(!product)return res.status(500).send("The gallery cannot be updated!")
+    res.send(product)
+})
 
   //delete
   router.delete("/:id",async (req,res)=>{
